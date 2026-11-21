@@ -6,6 +6,10 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  security-events: write
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -24,10 +28,8 @@ jobs:
       - name: Run JUnit regression tests
         run: chmod +x mvnw && ./mvnw test
 
-      
       - name: Run PIT mutation testing
         run: ./mvnw test-compile org.pitest:pitest-maven:mutationCoverage
-
 
       - name: Upload PIT report
         if: always()
@@ -35,3 +37,12 @@ jobs:
         with:
           name: pit-report
           path: target/pit-reports/
+
+      - name: Run SpotBugs analysis
+        run: ./mvnw spotbugs:spotbugs
+
+      - name: Upload SpotBugs SARIF to GitHub Code Scanning
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: target/spotbugsSarif.json

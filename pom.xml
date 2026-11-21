@@ -55,8 +55,17 @@
                     <classpathScope>compile</classpathScope>
                 </configuration>
             </plugin>
-            
-            
+
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>4.10.5.0</version>
+                <configuration>
+                    <sarifOutput>true</sarifOutput>
+                    <sarifOutputFilename>spotbugsSarif.json</sarifOutputFilename>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
