@@ -3,6 +3,7 @@ package game;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class Point {
 	public int x;
@@ -44,6 +45,10 @@ public class Point {
 	}
 
 	public List<Point> neighbors8(){
+		return neighbors8(new Random());
+	}
+
+	public List<Point> neighbors8(Random random){
 		List<Point> points = new ArrayList<Point>();
 		
 		for (int ox = -1; ox < 2; ox++){
@@ -55,7 +60,7 @@ public class Point {
 			}
 		}
 
-		Collections.shuffle(points);
+		Collections.shuffle(points, random);
 		return points;
 	}
 }

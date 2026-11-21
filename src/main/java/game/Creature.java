@@ -3,6 +3,7 @@ package game;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class Creature {
@@ -105,6 +106,7 @@ public class Creature {
 	
 	private String causeOfDeath;
 	public String causeOfDeath() { return causeOfDeath; }
+	Random random() { return world.random(); }
 	
 	public Creature(World world, char glyph, Color color, String name, int maxHp, int attack, int defense){
 		this.world = world;
@@ -177,7 +179,7 @@ public class Creature {
 		
 		int amount = Math.max(0, attack - other.defenseValue());
 		
-		amount = (int)(Math.random() * amount) + 1;
+		amount = world.random().nextInt(Math.max(1, amount)) + 1;
 		
 		Object[] params2 = new Object[params.length+1];
 		for (int i = 0; i < params.length; i++){

@@ -71,7 +71,7 @@ public class PathFinder {
 	}
 
 	private void checkNeighbors(Creature creature, Point end, Point closest) {
-		for (Point neighbor : closest.neighbors8()) {
+		for (Point neighbor : closest.neighbors8(creature.random())) {
 		    if (closed.contains(neighbor)
 		    		|| !creature.canEnter(neighbor.x, neighbor.y, creature.z)
 		    		&& !neighbor.equals(end))

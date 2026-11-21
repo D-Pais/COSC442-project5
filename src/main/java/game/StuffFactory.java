@@ -34,7 +34,7 @@ public class StuffFactory {
 		potionColors.put("light potion", AsciiPanel.brightWhite);
 
 		potionAppearances = new ArrayList<String>(potionColors.keySet());
-		Collections.shuffle(potionAppearances);
+		Collections.shuffle(potionAppearances, world.random());
 	}
 	
 	public Creature newPlayer(List<String> messages, FieldOfView fov){
@@ -164,7 +164,7 @@ public class StuffFactory {
 	}
 	
 	public Item randomWeapon(int depth){
-		switch ((int)(Math.random() * 3)){
+		switch (world.random().nextInt(3)){
 		case 0: return newDagger(depth);
 		case 1: return newSword(depth);
 		case 2: return newBow(depth);
@@ -173,7 +173,7 @@ public class StuffFactory {
 	}
 
 	public Item randomArmor(int depth){
-		switch ((int)(Math.random() * 3)){
+		switch (world.random().nextInt(3)){
 		case 0: return newLightArmor(depth);
 		case 1: return newMediumArmor(depth);
 		default: return newHeavyArmor(depth);
@@ -303,7 +303,7 @@ public class StuffFactory {
 	}
 	
 	public Item randomPotion(int depth){
-		switch ((int)(Math.random() * 9)){
+		switch (world.random().nextInt(9)){
 		case 0: return newPotionOfHealth(depth);
 		case 1: return newPotionOfHealth(depth);
 		case 2: return newPotionOfMana(depth);
@@ -356,7 +356,7 @@ public class StuffFactory {
 			}
 			public void update(Creature creature){
 				super.update(creature);
-				if (Math.random() < 0.25)
+				if (world.random().nextDouble() < 0.25)
 					creature.modifyHp(1, "Killed by inner strength spell?");
 			}
 			public void end(Creature creature){
@@ -392,8 +392,8 @@ public class StuffFactory {
 				
 				do
 				{
-					mx = (int)(Math.random() * 11) - 5;
-					my = (int)(Math.random() * 11) - 5;
+					mx = world.random().nextInt(11) - 5;
+					my = world.random().nextInt(11) - 5;
 				}
 				while (!creature.canEnter(creature.x+mx, creature.y+my, creature.z)
 						&& creature.canSee(creature.x+mx, creature.y+my, creature.z));
@@ -446,7 +446,7 @@ public class StuffFactory {
 	
 
 	public Item randomSpellBook(int depth){
-		switch ((int)(Math.random() * 2)){
+		switch (world.random().nextInt(2)){
 		case 0: return newWhiteMagesSpellbook(depth);
 		default: return newBlueMagesSpellbook(depth);
 		}

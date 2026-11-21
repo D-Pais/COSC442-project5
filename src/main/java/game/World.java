@@ -3,6 +3,8 @@ package game;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Random;
 
 public class World {
 	private Tile[][][] tiles;
@@ -18,15 +20,23 @@ public class World {
 	public int depth() { return depth; }
 	
 	private List<Creature> creatures;
+	private final Random random;
 	
 	public World(Tile[][][] tiles){
+		this(tiles, new Random());
+	}
+
+	public World(Tile[][][] tiles, Random random){
 		this.tiles = tiles;
 		this.width = tiles.length;
 		this.height = tiles[0].length;
 		this.depth = tiles[0][0].length;
 		this.creatures = new ArrayList<Creature>();
 		this.items = new Item[width][height][depth];
+		this.random = Objects.requireNonNull(random, "random");
 	}
+
+	Random random() { return random; }
 
 	public Creature creature(int x, int y, int z){
 		for (Creature c : creatures){
@@ -75,8 +85,8 @@ public class World {
 		int y;
 		
 		do {
-			x = (int)(Math.random() * width);
-			y = (int)(Math.random() * height);
+			x = random.nextInt(width);
+			y = random.nextInt(height);
 		} 
 		while (!tile(x,y,z).isGround() || creature(x,y,z) != null);
 		
@@ -119,8 +129,8 @@ public class World {
 		int y;
 		
 		do {
-			x = (int)(Math.random() * width);
-			y = (int)(Math.random() * height);
+			x = random.nextInt(width);
+			y = random.nextInt(height);
 		} 
 		while (!tile(x,y,depth).isGround() || item(x,y,depth) != null);
 		
@@ -154,7 +164,7 @@ public class World {
 					c.notify("A %s lands between your feet.", c.nameOf(item));
 				return true;
 			} else {
-				List<Point> neighbors = p.neighbors8();
+				List<Point> neighbors = p.neighbors8(random);
 				neighbors.removeAll(checked);
 				points.addAll(neighbors);
 			}
