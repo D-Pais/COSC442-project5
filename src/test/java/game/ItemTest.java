@@ -41,6 +41,15 @@ class ItemTest {
     }
 
     @Test
+    void descriptionUsesProvidedTextOrEmptyStringForNull() {
+        Item described = new Item('?', Color.BLUE, "Potion", null, "Restores health");
+        Item undescribed = new Item('?', Color.BLUE, "Rock", null, null);
+
+        assertEquals("Restores health", described.description());
+        assertEquals("", undescribed.description());
+    }
+
+    @Test
     void modifiesCombatAndFoodValues() {
         item.modifyFoodValue(4);
         item.modifyFoodValue(-1);
