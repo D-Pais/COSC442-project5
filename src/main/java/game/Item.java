@@ -17,6 +17,9 @@ public class Item {
 
 	private String appearance;
 	public String appearance() { return appearance; }
+
+	private String description;
+	public String description() { return description; }
 	
 	private int foodValue;
 	public int foodValue() { return foodValue; }
@@ -50,10 +53,15 @@ public class Item {
 	}
 	
 	public Item(char glyph, Color color, String name, String appearance){
+		this(glyph, color, name, appearance, "");
+	}
+
+	public Item(char glyph, Color color, String name, String appearance, String description){
 		this.glyph = glyph;
 		this.color = color;
 		this.name = name;
 		this.appearance = appearance == null ? name : appearance;
+		this.description = description == null ? "" : description;
 		this.thrownAttackValue = 1;
 		this.writtenSpells = new ArrayList<Spell>();
 	}
